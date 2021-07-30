@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+main() {
+    mkdir -p $HOME/bin/logs
+    echo "Every Week Ran on $(date)" >> $HOME/bin/logs/every-week.log
+}
+
+main "$@";
