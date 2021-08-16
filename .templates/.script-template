@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+BASE_LOCATION={base_location}
+LOG_LOCATION={base_location}/logs/{script_name}.log
+
+log_start() {
+    mkdir -p {base_location}/logs
+    echo "Every Minute Ran on $(date)" >> $LOG_LOCATION
+}
+
+send_email() {
+    local result="$({node_binary} $BASE_LOCATION/src/sendMail.js)"
+    echo $result >> $LOG_LOCATION
+}
+
+main() {
+    log_start
+    send_email
+    echo "Finished run successfully" >> $LOG_LOCATION
+}
+
+main "$@";

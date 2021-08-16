@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+setup_cron_script() {
+    local script_name="${1:-"every-day"}"
+    local script_template="./.templates/.script-template"
+    local script_output="./bin/cron/$script_name"
+    local base_location="$(pwd)"
+    local node_binary="$(which node)"
+
+    if [[ ! -e $script_output ]]; then
+        cat $script_template \
+            | sed "s#{base_location}#$base_location#g" \
+            | sed "s#{node_binary}#$node_binary#g" \
+            | sed "s#{script_name}#$script_name#g" \
+            > $script_output
+
+        echo "Updating permissions for $script_output"
+        chmod u+x $script_output
+
+        [[ -x $script_output ]] && echo "file is now executable" \
+            || echo "something went wrong making $script_output executable"
+    else
+        echo "$script_output already exists"
+    fi
+}
+
+setup_env() {
+cat <<EOT >> ./src/.env
+# Generate an application password for gmail
+# https://lmgtfy.app/?q=how+to+generate+application+specific+password+for+gmail
+EMAIL_PASSWORD="xxxxxxxxxxxxxxxxxxx"
+EMAIL_USERNAME=your.email@gmail.com
+EOT
+}
+
+setup_recipients() {
+cat <<EOT > ./src/recipients.js
+const RECIPIENTS = [
+    {
+        NAME: "$(git config user.name)",
+        EMAIL: "$(git config user.email)"
+    },
+];
+
+module.exports = RECIPIENTS;
+EOT
+}
+
+print_current() {
+    echo "\n $(crontab -l)"
+}
+
+clear_crontab() {
+    echo "# minute    hour    day(month)    month    day(week)         command" | crontab -
+}
+
+every_minute() {
+    setup_cron_script "every-minute"
+    crontab -l | { cat; echo "* * * * * $(pwd)/bin/cron/every-minute"; } | crontab -
+    echo "add \"* * * * * $(pwd)/bin/cron/every-minute\" to crontab"
+}
+
+every_day() {
+    setup_cron_script "every-day"
+    crontab -l | { cat; echo "0 9 * * * $(pwd)/bin/cron/every-day"; } | crontab -
+    echo "add \"0 9 * * * $(pwd)/bin/cron/every-day\" to crontab"
+}
+
+main() {
+    local option=${1}
+
+    case $option in
+    "script"*)
+        local name=${2}
+        setup_cron_script $name
+    ;;
+    "recipients"*)
+        setup_recipients
+    ;;
+    "env"*)
+        setup_env
+    ;;
+    "day"*)
+        every_day
+        print_current
+    ;;
+    "minute"*)
+        every_minute
+        print_current
+    ;;
+    "clear"*)
+        clear_crontab
+        print_current
+    ;;
+    "show"*)
+        print_current
+    ;;
+    esac
+}
+
+main "$@"
