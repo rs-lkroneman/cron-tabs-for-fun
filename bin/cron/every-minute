@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+BASE_LOCATION=/Users/lennart.kroneman/code/how-to-annoy-your-friends
+LOG_LOCATION=/Users/lennart.kroneman/code/how-to-annoy-your-friends/logs/every-minute.log
+
+log_start() {
+    mkdir -p /Users/lennart.kroneman/code/how-to-annoy-your-friends/logs
+    echo "Every Minute Ran on $(date)" >> $LOG_LOCATION
+}
+
+send_email() {
+    local result="$(/Users/lennart.kroneman/.asdf/shims/node $BASE_LOCATION/src/sendMail.js)"
+    echo $result >> $LOG_LOCATION
+}
+
+main() {
+    log_start
+    send_email
+    echo "Finished run successfully" >> $LOG_LOCATION
+}
+
+main "$@";
