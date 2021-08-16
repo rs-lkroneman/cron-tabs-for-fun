@@ -83,7 +83,7 @@ every_minute() {
 
 every_day() {
     setup_cron_script "every-day"
-    crontab -l | { cat; echo "0 9 * * * $(pwd)/bin/cron/every-day"; } | crontab -
+    crontab -l | { cat; echo "0 10 * * * $(pwd)/bin/cron/every-day"; } | crontab -
     echo "add \"0 9 * * * $(pwd)/bin/cron/every-day\" to crontab"
 }
 
