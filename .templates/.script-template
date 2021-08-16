@@ -5,18 +5,40 @@ LOG_LOCATION={base_location}/logs/{script_name}.log
 
 log_start() {
     mkdir -p {base_location}/logs
-    echo "Every Minute Ran on $(date)" >> $LOG_LOCATION
+    echo "
+============================
+$(date) Started Cron Run
+============================" >> $LOG_LOCATION
+}
+
+log_success() {
+    echo "============================
+$(date) End Run: Finished run successfully
+============================" >> $LOG_LOCATION
+}
+
+log_failure() {
+    echo "============================
+$(date) End Run: Someting broke
+============================" >> $LOG_LOCATION
+}
+
+handle_exit() {
+    local exit_code="$?"
+
+    [[ $exit_code -ne 0 ]] && log_failure || log_success
+    exit $exit_code
 }
 
 send_email() {
-    local result="$({node_binary} $BASE_LOCATION/src/sendEmail.js)"
-    echo $result >> $LOG_LOCATION
+    {node_binary} $BASE_LOCATION/src/sendEmail.js &>> $LOG_LOCATION
+    exit $?
 }
 
 main() {
+    trap "handle_exit" EXIT
     log_start
     send_email
-    echo "Finished run successfully" >> $LOG_LOCATION
 }
 
 main "$@";

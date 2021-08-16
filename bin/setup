@@ -67,7 +67,8 @@ EOT
 }
 
 print_current() {
-    echo "\n $(crontab -l)"
+    echo ""
+    echo "$(crontab -l)"
 }
 
 clear_crontab() {

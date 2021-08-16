@@ -14,7 +14,7 @@ const quotes = require('./quotes.json');
 const cowsayAvatars = require('./avatars');
 const RECIPIENTS = require('./recipients');
 
-const { EMAIL_PASSWORD, EMAIL_USERNAME } = process.env;
+const { EMAIL_PASSWORD, EMAIL_USERNAME, EMAIL_FROM } = process.env;
 
 (async function main() {
     const emails = RECIPIENTS.map(async (recipient) => {
@@ -35,6 +35,7 @@ const { EMAIL_PASSWORD, EMAIL_USERNAME } = process.env;
         } catch (e) {
             process.stdout.write(e.toString());
             console.error(e);
+            process.exit(1);
         }
     });
 
@@ -44,6 +45,7 @@ const { EMAIL_PASSWORD, EMAIL_USERNAME } = process.env;
     } catch (e) {
         process.stdout.write(e.toString());
         console.error(e);
+        process.exit(1);
     }
 })();
 
@@ -68,7 +70,7 @@ async function getRandomQuoteEmail(recipient) {
     const withCowsay = true;
     const quoteContent = sample(quotes);
     const avatar = sample(cowsayAvatars);
-    const { stdout, stderr } = await execAsync(`cowsay -f ${avatar} "${quoteContent.text} ~ ${quoteContent.author || 'unknown'}"`);
+    const { stdout, stderr } = await execAsync(`/usr/local/bin/cowsay -f ${avatar} "${quoteContent.text} ~ ${quoteContent.author || 'unknown'}"`);
     const quote = withCowsay && !stderr
         ? `<pre>${stdout}</pre>`
         : `<blockquote>
@@ -92,7 +94,7 @@ async function getRandomQuoteEmail(recipient) {
         <div style="margin: 16px 0;">
             Have a good Day!
             <div style="margin: 5px 0;">
-            Lennart
+            ${EMAIL_FROM}
             </div>
         </div>
 
