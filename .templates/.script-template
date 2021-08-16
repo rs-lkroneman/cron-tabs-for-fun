@@ -9,7 +9,7 @@ log_start() {
 }
 
 send_email() {
-    local result="$({node_binary} $BASE_LOCATION/src/sendMail.js)"
+    local result="$({node_binary} $BASE_LOCATION/src/sendEmail.js)"
     echo $result >> $LOG_LOCATION
 }
 
