@@ -46,6 +46,4 @@ const cowsayAvatars = [
     // 'www'
 ];
 
-module.exports = {
-    cowsayAvatars
-};
+module.exports = cowsayAvatars;

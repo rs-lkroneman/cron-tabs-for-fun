@@ -18,19 +18,24 @@ const { EMAIL_PASSWORD, EMAIL_USERNAME } = process.env;
 
 (async function main() {
     const emails = RECIPIENTS.map(async (recipient) => {
-        const { html, subject } = await getRandomQuoteEmail(recipient);
-        const emailPayload = {
-            auth: {
-                user: EMAIL_USERNAME,
-                pass: EMAIL_PASSWORD
-            },
-            from: EMAIL_USERNAME,
-            to: recipient.EMAIL,
-            subject,
-            html
-        };
+        try {
+            const { html, subject } = await getRandomQuoteEmail(recipient);
+            const emailPayload = {
+                auth: {
+                    user: EMAIL_USERNAME,
+                    pass: EMAIL_PASSWORD
+                },
+                from: EMAIL_USERNAME,
+                to: recipient.EMAIL,
+                subject,
+                html
+            };
 
-        return sendEmail(emailPayload);
+            return sendEmail(emailPayload);
+        } catch (e) {
+            process.stdout.write(e.toString());
+            console.error(e);
+        }
     });
 
     try {
