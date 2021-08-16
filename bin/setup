@@ -13,7 +13,13 @@ print_help_text() {
     "
 }
 
+ensure_cron_dir() {
+    mkdir -p "./bin/cron"
+}
+
 setup_cron_script() {
+    ensure_cron_dir
+
     local script_name="${1:-"every-day"}"
     local script_template="./.templates/.script-template"
     local script_output="./bin/cron/$script_name"
