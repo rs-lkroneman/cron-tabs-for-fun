@@ -89,6 +89,16 @@ main() {
     local option=${1}
 
     case $option in
+    "quickstart"*)
+        brew install cowsay \
+            && cd ./src \
+            && yarn install \
+            && cd .. \
+            && setup_recipients \
+            && setup_env \
+            && every_minute \
+            && print_current
+    ;;
     "script"*)
         local name=${2}
         setup_cron_script $name

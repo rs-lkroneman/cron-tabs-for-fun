@@ -8,20 +8,13 @@ A repository for automating emails from your gmail acount using
 - crontab
 - a bash script
 
-## Setup
+## Quickstart (short version)
 
-1. setup script help text
-
-```bash
-bin/setup recipients    - creates a initial recipients list file as a sample
-bin/setup env           - creates a .env file as a sample
-bin/setup script [name] - creates a cron script from template to run the email
-
-bin/setup clear         - clears crontabs
-bin/setup show          - shows configured crontabs
-bin/setup day           - creates a sample day cron tab with an executable script
-bin/setup minute        - creates a sample minute cron tab with an executable script
 ```
+bin/setup quickstart
+```
+
+update ./.env with your credentials by following [generate-application-password-for-gmail](https://lmgtfy.app/?q=how+to+generate+application+specific+password+for+gmail)
 
 ### Install Dependencies
 
@@ -69,5 +62,19 @@ once the file is set up open ./.env and update your email and credentials
 
 ```sh
 bin/setup recipients
+```
+
+###  Help Text
+1. setup script help text
+
+```bash
+bin/setup recipients    - creates a initial recipients list file as a sample
+bin/setup env           - creates a .env file as a sample
+bin/setup script [name] - creates a cron script from template to run the email
+
+bin/setup clear         - clears crontabs
+bin/setup show          - shows configured crontabs
+bin/setup day           - creates a sample day cron tab with an executable script
+bin/setup minute        - creates a sample minute cron tab with an executable script
 ```
 
