@@ -49,6 +49,7 @@ cat <<EOT >> ./src/.env
 # https://lmgtfy.app/?q=how+to+generate+application+specific+password+for+gmail
 EMAIL_PASSWORD="xxxxxxxxxxxxxxxxxxx"
 EMAIL_USERNAME=your.email@gmail.com
+EMAIL_FROM="$(git config user.name)"
 EOT
 }
 
