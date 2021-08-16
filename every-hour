@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-main() {
-    mkdir -p $HOME/bin/logs
-    echo "Every Hour Ran on $(date)" >> $HOME/bin/logs/every-hour.log
-}
-
-main "$@";
