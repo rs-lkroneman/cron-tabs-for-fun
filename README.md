@@ -1,6 +1,27 @@
 # Crontabs + Cowsay + Emails
 
+A repository for automating emails from your gmail acount using
+
+- cowsay
+- node
+- nodemailer
+- crontab
+- a bash script
+
 ## Setup
+
+```bash
+        script help text
+
+        bin/setup recipients    - creates a initial recipients list file as a sample
+        bin/setup env           - creates a .env file as a sample
+        bin/setup script [name] - creates a cron script from template to run the email
+
+        bin/setup clear         - clears crontabs
+        bin/setup show          - shows configured crontabs
+        bin/setup day           - creates a sample day cron tab with an executable script
+        bin/setup minute        - creates a sample minute cron tab with an executable script
+```
 
 ### Install Dependencies
 
@@ -18,6 +39,11 @@ brew install cowsay
     - [node with asdf](https://github.com/asdf-vm/asdf-nodejs)
 - [directly](https://nodejs.org/en/download/)
 - [with nvm](https://github.com/nvm-sh/nvm#install--update-script)
+
+3. Node Dependencies
+```bash
+cd src && yarn install && cd ..
+```
 
 ### Add a recipients list
 

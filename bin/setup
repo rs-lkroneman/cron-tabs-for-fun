@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+print_help_text() {
+    echo "
+        bin/setup recipients    - creates a initial recipients list file as a sample
+        bin/setup env           - creates a .env file as a sample
+        bin/setup script [name] - creates a cron script from template to run the email
+
+        bin/setup clear         - clears crontabs
+        bin/setup show          - shows configured crontabs
+        bin/setup day           - creates a sample day cron tab with an executable script
+        bin/setup minute        - creates a sample minute cron tab with an executable script
+    "
+}
+
 setup_cron_script() {
     local script_name="${1:-"every-day"}"
     local script_template="./.templates/.script-template"
@@ -94,6 +107,9 @@ main() {
     ;;
     "show"*)
         print_current
+    ;;
+    *)
+        print_help_text
     ;;
     esac
 }
