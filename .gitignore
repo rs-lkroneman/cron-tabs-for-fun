@@ -1,6 +1,7 @@
 logs
 node_modules
 .env
+bin/cron
 
 recipients.js
 

@@ -10,17 +10,17 @@ A repository for automating emails from your gmail acount using
 
 ## Setup
 
+1. setup script help text
+
 ```bash
-        script help text
+bin/setup recipients    - creates a initial recipients list file as a sample
+bin/setup env           - creates a .env file as a sample
+bin/setup script [name] - creates a cron script from template to run the email
 
-        bin/setup recipients    - creates a initial recipients list file as a sample
-        bin/setup env           - creates a .env file as a sample
-        bin/setup script [name] - creates a cron script from template to run the email
-
-        bin/setup clear         - clears crontabs
-        bin/setup show          - shows configured crontabs
-        bin/setup day           - creates a sample day cron tab with an executable script
-        bin/setup minute        - creates a sample minute cron tab with an executable script
+bin/setup clear         - clears crontabs
+bin/setup show          - shows configured crontabs
+bin/setup day           - creates a sample day cron tab with an executable script
+bin/setup minute        - creates a sample minute cron tab with an executable script
 ```
 
 ### Install Dependencies
