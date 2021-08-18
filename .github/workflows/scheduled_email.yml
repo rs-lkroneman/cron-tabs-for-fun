@@ -28,7 +28,7 @@ jobs:
         cd src && yarn install && cd .. && sudo apt-get install cowsay
     - name: Setup Recipients
       run: |
-        echo $RECIPIENTS_LIST_JS > ${GITHUB_WORKSPACE}/recipients.js
+        echo $RECIPIENTS_LIST_JS > ${GITHUB_WORKSPACE}/srs/recipients.js
     - name: Send Email
       run: |
         node ${GITHUB_WORKSPACE}/src/sendEmail.js
