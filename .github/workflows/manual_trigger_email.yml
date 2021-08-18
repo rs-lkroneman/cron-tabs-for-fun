@@ -1,5 +1,7 @@
+name: "Manual Send"
 on: 
   workflow_dispatch:
+
 jobs:
   send_email:
     runs-on: ubuntu-20.04
