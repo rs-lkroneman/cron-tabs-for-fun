@@ -4,5 +4,6 @@ node_modules
 bin/cron
 
 recipients.js
+recipients.*.js
 
 yarn.lock

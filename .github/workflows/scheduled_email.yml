@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 15 * * *'
 jobs:
   send_email:
     runs-on: ubuntu-20.04
