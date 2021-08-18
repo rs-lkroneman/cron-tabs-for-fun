@@ -1,6 +1,8 @@
+name: Cowsay Schedule
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: "* * * * *"
+
 jobs:
   send_email:
     runs-on: ubuntu-20.04
