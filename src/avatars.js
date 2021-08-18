@@ -15,7 +15,6 @@ const cowsayAvatars = [
     // 'eyes',
     // 'flaming-sheep',
     // 'ghostbusters',
-    'head-in',
     'hellokitty',
     // 'kiss',
     // 'kitty',

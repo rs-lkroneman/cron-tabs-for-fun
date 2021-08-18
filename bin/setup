@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 print_help_text() {
     echo "
@@ -77,14 +77,14 @@ clear_crontab() {
 
 every_minute() {
     setup_cron_script "every-minute"
-    crontab -l | { cat; echo "* * * * * $(pwd)/bin/cron/every-minute"; } | crontab -
-    echo "add \"* * * * * $(pwd)/bin/cron/every-minute\" to crontab"
+    crontab -l | { cat; echo "  *         *         *         *         *         bash $(pwd)/bin/cron/every-minute"; } | crontab -
+    echo "add \"  *          *      *         *         *         bash $(pwd)/bin/cron/every-minute\" to crontab"
 }
 
 every_day() {
     setup_cron_script "every-day"
-    crontab -l | { cat; echo "0 10 * * * $(pwd)/bin/cron/every-day"; } | crontab -
-    echo "add \"0 9 * * * $(pwd)/bin/cron/every-day\" to crontab"
+    crontab -l | { cat; echo " 0         10         *         *         *         bash $(pwd)/bin/cron/every-day"; } | crontab -
+    echo "add \" 0         9         *         *         *         bash $(pwd)/bin/cron/every-day\" to crontab"
 }
 
 main() {
@@ -118,6 +118,12 @@ main() {
     "minute"*)
         every_minute
         print_current
+    ;;
+    "mail_clear"*)
+        echo 'd *' | mail -N
+    ;;
+    "mail_show"*)
+        cat /var/mail/$USER
     ;;
     "clear"*)
         clear_crontab
