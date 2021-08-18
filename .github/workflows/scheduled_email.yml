@@ -2,16 +2,17 @@ on:
   workflow_dispatch:
     inputs:
       to_email:
-        description: 'Log level'
+        description: 'Email'
         required: true
         default: lennart.kroneman@daveramsey.com
       to_name:
-        description: 'Test scenario tags'  
+        description: 'Name'
+        required: true
         default: 'Lennart'
 jobs:
   printInputs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo "Log level: ${{ github.event.inputs.logLevel }}"
-        echo "Tags: ${{ github.event.inputs.tags }}"
+        echo "Email: ${{ github.event.inputs.to_email }}"
+        echo "Name: ${{ github.event.inputs.to_name }}"
