@@ -1,7 +1,8 @@
 name: Cowsay Schedule
 on:
   schedule:
-  - cron: "28 12 * * *"
+  # in UTC Time
+  - cron: "28 10 * * *"
 
 jobs:
   send_email:
