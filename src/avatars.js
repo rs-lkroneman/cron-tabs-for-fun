@@ -1,4 +1,7 @@
-const cowsayAvatars = [
+const { CI } = process.env;
+const isCI = CI === 'true';
+
+const macCowsayAvatars = [
     // 'beavis.zen',
     'blowfish',
     // 'bong',
@@ -45,4 +48,54 @@ const cowsayAvatars = [
     // 'www'
 ];
 
-module.exports = cowsayAvatars;
+const linuxCowsayAvatars = [
+    // 'apt',
+    'calvin',
+    // 'cower',
+    'dragon-and-cow',
+    // 'elephant-in-snake',
+    // 'flaming-sheep',
+    'gnu',
+    // 'kiss',
+    'luke-koala',
+    'moofasa',
+    'pony',
+    // 'skeleton',
+    // 'stimpy',
+    'turkey',
+    // 'unipony-smaller',
+    'vader',
+    'bud-frogs',
+    'cheese',
+    // 'daemon',
+    // 'dragon',
+    'elephant',
+    'fox',
+    'hellokitty',
+    'koala',
+    'mech-and-cow',
+    'moose',
+    // 'ren',
+    'snowman',
+    'suse',
+    'turtle',
+    // 'unipony',
+    // 'www',
+    // 'bunny',
+    // 'cock',
+    'default',
+    // 'duck',
+    'eyes',
+    'ghostbusters',
+    // 'kangaroo',
+    // 'kosh',
+    'milk',
+    // 'pony-smaller',
+    'sheep',
+    'stegosaurus',
+    // 'three-eyes',
+    'tux',
+    'vader-koala',
+];
+
+module.exports = isCI ? linuxCowsayAvatars : macCowsayAvatars;
