@@ -14,10 +14,15 @@ const quotes = require('./quotes.json');
 const cowsayAvatars = require('./avatars');
 const RECIPIENTS = require('./recipients');
 
-const { EMAIL_PASSWORD, EMAIL_USERNAME, EMAIL_FROM, CI } = process.env;
+const { EMAIL_PASSWORD, EMAIL_USERNAME, EMAIL_FROM, CI, SEND_DELAY } = process.env;
+
+// Adds a delay between emails to circumvent
+// Error: Data command failed: 421 4.3.0 Temporary System Problem.
+// https://stackoverflow.com/questions/39097834/gmail-smtp-error-temporary-block
+const SECOND = parseInt(SEND_DELAY, 10) || 1000;
 
 (async function main() {
-    const emails = RECIPIENTS.map(async (recipient) => {
+    const emails = RECIPIENTS.map(async (recipient, index) => {
         try {
             const { html, subject } = await getRandomQuoteEmail(recipient);
             const emailPayload = {
@@ -31,7 +36,7 @@ const { EMAIL_PASSWORD, EMAIL_USERNAME, EMAIL_FROM, CI } = process.env;
                 html
             };
 
-            return sendEmail(emailPayload);
+            return sendEmail(emailPayload, index * SECOND);
         } catch (e) {
             process.stdout.write(e.toString());
             console.error(e);
@@ -49,7 +54,7 @@ const { EMAIL_PASSWORD, EMAIL_USERNAME, EMAIL_FROM, CI } = process.env;
     }
 })();
 
-function sendEmail(options) {
+function sendEmail(options, delay = 0) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         debug: true,
@@ -57,12 +62,24 @@ function sendEmail(options) {
         auth: options.auth
     });
 
-    return transporter.sendMail({
-        from: options.from,
-        to: options.to,
-        subject: options.subject,
-        text: options.text,
-        html: options.html,
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            transporter.sendMail({
+                from: options.from,
+                to: options.to,
+                subject: options.subject,
+                text: options.text,
+                html: options.html,
+            }, (err, info) => {
+                if(err) {
+                    reject(err);
+                    return;
+                }
+                
+                process.stdout.write(`Sent after ${delay}ms`);
+                resolve(info);
+            });
+        }, delay)
     });
 }
 
