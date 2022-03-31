@@ -1,4 +1,4 @@
-# Crontabs + Cowsay + Emails
+# CronTabs + Cowsay + Emails
 
 A repository for automating emails from your gmail acount using
 
